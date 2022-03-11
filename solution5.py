@@ -1,4 +1,5 @@
 from fractions import Fraction
+from re import T
 
 
 
@@ -124,3 +125,82 @@ def matrix_multiply(A, B):
             C[i][j] = total
  
     return C    
+
+def copy_matrix(M):
+    """
+    Creates and returns a copy of a matrix.
+        :param M: The matrix to be copied
+ 
+        :return: A copy of the given matrix
+        from: https://integratedmlai.com/basic-linear-algebra-tools-in-pure-python-without-numpy-or-scipy/
+    """
+    # Section 1: Get matrix dimensions
+    rows = len(M)
+    cols = len(M[0])
+ 
+    # Section 2: Create a new matrix of zeros
+    MC = zeros_matrix(rows, cols)
+ 
+    # Section 3: Copy values of M into the copy
+    for i in range(rows):
+        for j in range(cols):
+            MC[i][j] = M[i][j]
+ 
+    return MC
+
+def pre_process_step1(m):
+    """
+    return a tuple (matrix,[absorbing states])
+    """
+    rows = len(m)
+    cols = len(m[0])
+    result = zeros_matrix(rows,cols)
+    absorb_states = []
+    for i in range(rows):
+        row = m[i]
+        rowsum=sum(row)
+        # if rowsum is zero, mark absorbing state
+        if rowsum==0:
+            result[i][i]=1
+            absorb_states.append(i)
+            continue
+        for j in range(cols):
+            result[i][j]=Fraction(m[i][j],rowsum)
+
+    return (result,absorb_states)
+
+def get_R_Q_matrices(m, ab_states):
+    """
+    Puts m into standard form, returns a new matrix
+    """
+    ms=zeros_matrix(len(m),len(m[0]))
+    ab_states.sort(reverse=True)
+    for i in range(len(ab_states)):
+        ms[i][i]=1
+    print(i)
+    ab_set = set(ab_states)
+    all_set = set(range(0,len(m)))
+    diff = all_set.difference(ab_set)
+    states=ab_states+list(diff)
+    i=i+1
+    q_start_row=i
+    r_start_row=i
+    r_start_col=i
+    for from_st in (states)[i:]:
+        for j,to_st in enumerate(states):
+            ms[i][j]=m[from_st][to_st]
+        i=i+1
+    
+    Q=zeros_matrix(len(states)-q_start_row,len(ab_states))
+    R=zeros_matrix(len(states)-r_start_row, len(states)-len(ab_states))
+    for i in range(q_start_row,len(ms[0])):
+        for j in range(r_start_col-1):
+            Q[i-q_start_row][j]=ms[i][j]
+        for k in range(r_start_col,len(ms)):
+            R[i-q_start_row][k-r_start_col]=ms[i][k]
+    
+    return (Q,R)
+
+
+    
+
