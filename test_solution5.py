@@ -60,9 +60,8 @@ class TestSolution5(unittest.TestCase):
 
         ab_states =[2,3,4,5]
 
-        result = solution5.get_R_Q_matrices(m,ab_states)
-        Q=result[0]
-        R=result[1]
+        (R,Q,states) = solution5.get_R_Q_matrices(m,ab_states)
+        self.assertEqual(states,[5,4,3,2,0,1])
         self.assertEqual(Q[0],[Fraction(1,2),0,0,0])
         self.assertEqual(Q[1],[0,Fraction(2,9),Fraction(1,3),0])
         
@@ -92,7 +91,24 @@ class TestSolution5(unittest.TestCase):
         R=[[Fraction(1,10), Fraction(4,10)]]
         Q= [[Fraction(1,2)]]
 
-        result = solution5.calc_FR(Q,R)
+        result = solution5.calc_FR(R,Q)
         self.assertEqual(result[0],[Fraction(1,5), Fraction(4,5)])
 
-    
+    def test_case_1(self):
+        m=[
+        [0,1,0,0,0,1],  # s0, the initial state, goes to s1 and s5 with equal probability
+        [4,0,0,3,2,0],  # s1 can become s0, s3, or s4, but with different probabilities
+        [0,0,0,0,0,0],  # s2 is terminal, and unreachable (never observed in practice)
+        [0,0,0,0,0,0],  # s3 is terminal
+        [0,0,0,0,0,0],  # s4 is terminal
+        [0,0,0,0,0,0],  # s5 is terminal
+        ]
+
+        result = solution5.solution(m)
+        self.assertIsNotNone(result)
+
+
+
+    def test_lcm_multi_14_3_7_6_shouldbe_42(self):
+        result =solution5.lcm_multi([14,3,7,6])
+        self.assertEqual(42,result)

@@ -1,4 +1,5 @@
 from fractions import Fraction
+import fractions
 from operator import inv
 from re import T
 
@@ -225,9 +226,9 @@ def get_R_Q_matrices(m, ab_states):
         for k in range(r_start_col,len(ms)):
             R[i-q_start_row][k-r_start_col]=ms[i][k]
     
-    return (Q,R)
+    return (R,Q,states)
 
-def calc_FR(Q,R):
+def calc_FR(R,Q):
     I = identity_matrix(len(Q))
     diff = matrix_subtraction(I,Q)
 
@@ -236,6 +237,36 @@ def calc_FR(Q,R):
 
     return FR
 
+def lcm(a, b):
+    return abs(a*b) // fractions.gcd(a, b)
 
+def lcm_multi(array):
+    res=1
+    for num in array:
+        res=lcm(res,num)
+    return res
+
+def solution(m):
+    (m1,abs_states) = pre_process_step1(m)
+
+    (R,Q,states) = get_R_Q_matrices(m1,abs_states)
+    FR = calc_FR(Q,R)
+
+    result_states=states[len(abs_states):]
+    # find state 0
+    s0=result_states.index(0)
+
+    result_row = FR[s0]
+
+    result = {}
+    for i,res in enumerate(result_row):
+        st=abs_states[i]
+        result[st]=res
+
+    almost_there=[]
+    for key in sorted(result):
+        almost_there.append(result[key])
+
+    return almost_there
     
 
