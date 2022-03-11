@@ -221,7 +221,7 @@ def get_R_Q_matrices(m, ab_states):
     Q=zeros_matrix(len(states)-q_start_row,len(ab_states))
     R=zeros_matrix(len(states)-r_start_row, len(states)-len(ab_states))
     for i in range(q_start_row,len(ms[0])):
-        for j in range(r_start_col-1):
+        for j in range(r_start_col):
             Q[i-q_start_row][j]=ms[i][j]
         for k in range(r_start_col,len(ms)):
             R[i-q_start_row][k-r_start_col]=ms[i][k]
@@ -249,8 +249,8 @@ def lcm_multi(array):
 def solution(m):
     (m1,abs_states) = pre_process_step1(m)
 
-    (R,Q,states) = get_R_Q_matrices(m1,abs_states)
-    FR = calc_FR(Q,R)
+    (Q,R,states) = get_R_Q_matrices(m1,abs_states)
+    FR = calc_FR(R,Q)
 
     result_states=states[len(abs_states):]
     # find state 0

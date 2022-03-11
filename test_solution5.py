@@ -105,9 +105,14 @@ class TestSolution5(unittest.TestCase):
         ]
 
         result = solution5.solution(m)
-        self.assertIsNotNone(result,[0,3,2,9,14])
+        self.assertEqual(result,[0,3,2,9,14])
 
 
+    def test_case_2(self):
+        m=[[0, 2, 1, 0, 0], [0, 0, 0, 3, 4], [0, 0, 0, 0, 0], [0, 0, 0, 0,0], [0, 0, 0, 0, 0]]
+        result = solution5.solution(m)
+
+        self.assertEqual(result,[7,6,8,21])
 
     def test_lcm_multi_14_3_7_6_shouldbe_42(self):
         result =solution5.lcm_multi([14,3,7,6])
