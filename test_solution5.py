@@ -92,9 +92,6 @@ class TestSolution5(unittest.TestCase):
         R=[[Fraction(1,10), Fraction(4,10)]]
         Q= [[Fraction(1,2)]]
 
-        f= Fraction(1,2)
-        f.
-
         result = solution5.calc_FR(Q,R)
         self.assertEqual(result[0],[Fraction(1,5), Fraction(4,5)])
 
