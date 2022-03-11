@@ -105,7 +105,7 @@ class TestSolution5(unittest.TestCase):
         ]
 
         result = solution5.solution(m)
-        self.assertIsNotNone(result)
+        self.assertIsNotNone(result,[0,3,2,9,14])
 
 
 

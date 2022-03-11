@@ -258,15 +258,26 @@ def solution(m):
 
     result_row = FR[s0]
 
-    result = {}
+    mydict = {}
     for i,res in enumerate(result_row):
         st=abs_states[i]
-        result[st]=res
+        mydict[st]=res
 
     almost_there=[]
-    for key in sorted(result):
-        almost_there.append(result[key])
+    for key in sorted(mydict):
+        almost_there.append(mydict[key])
 
-    return almost_there
+    numerators = map(lambda x: x.numerator,almost_there)
+    denoms = map(lambda x: x.denominator, almost_there)
+
+    lcm = lcm_multi(denoms)
+
+    result=[]
+    for i,num in enumerate(numerators):
+        fr=lcm / denoms[i]
+        result.append(num * fr)
+    
+    result.append(lcm)
+    return result
     
 
