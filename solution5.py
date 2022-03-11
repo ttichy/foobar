@@ -1,4 +1,5 @@
 from fractions import Fraction
+from operator import inv
 from re import T
 
 
@@ -16,7 +17,7 @@ def zeros_matrix(rows, cols):
     while len(M) < rows:
         M.append([])
         while len(M[-1]) < cols:
-            M[-1].append(0.0)
+            M[-1].append(0)
  
     return M
 
@@ -30,7 +31,7 @@ def identity_matrix(n):
     """
     IdM = zeros_matrix(n, n)
     for i in range(n):
-        IdM[i][i] = 1.0
+        IdM[i][i] = 1
  
     return IdM
 
@@ -44,31 +45,42 @@ def print_matrix(M, decimals=3):
         print([round(x,decimals)+0 for x in row])
 
 
-def transpose(M):
+def invert_matrix(A, tol=None):
     """
-    Returns a transpose of a matrix.
-        :param M: The matrix to be transposed
+    Returns the inverse of the passed in matrix.
+        :param A: The matrix to be inversed
  
-        :return: The transpose of the given matrix
-    from: https://integratedmlai.com/basic-linear-algebra-tools-in-pure-python-without-numpy-or-scipy/        
+        :return: The inverse of the matrix A
+        modified from: https://integratedmlai.com/basic-linear-algebra-tools-in-pure-python-without-numpy-or-scipy/
     """
-    # Section 1: if a 1D array, convert to a 2D array = matrix
-    if not isinstance(M[0],list):
-        M = [M]
  
-    # Section 2: Get dimensions
-    rows = len(M)
-    cols = len(M[0])
+    # Section 2: Make copies of A & I, AM & IM, to use for row ops
+    n = len(A)
+    AM = copy_matrix(A)
+    I = identity_matrix(n)
+    IM = copy_matrix(I)
  
-    # Section 3: MT is zeros matrix with transposed dimensions
-    MT = zeros_matrix(cols, rows)
- 
-    # Section 4: Copy values from M to it's transpose MT
-    for i in range(rows):
-        for j in range(cols):
-            MT[j][i] = M[i][j]
- 
-    return MT        
+    # Section 3: Perform row operations
+    indices = list(range(n)) # to allow flexible row referencing ***
+    for fd in range(n): # fd stands for focus diagonal
+        # FIRST: scale fd row with fd inverse. 
+        # fdScaler = 1.0 / AM[fd][fd]
+        scaler = Fraction(1,AM[fd][fd])
+        for j in range(n): # Use j to indicate column looping.
+            AM[fd][j] = AM[fd][j] * scaler
+            # AM[fd][j] *= fdScaler
+            IM[fd][j] = IM[fd][j] * scaler
+            # IM[fd][j] *= fdScaler
+        # SECOND: operate on all rows except fd row as follows:
+        for i in indices[0:fd] + indices[fd+1:]: 
+            # *** skip row with fd in it.
+            crScaler = AM[i][fd] # cr stands for "current row".
+            for j in range(n): 
+                # cr - crScaler * fdRow, but one element at a time.
+                AM[i][j] = AM[i][j] - crScaler * AM[fd][j]
+                IM[i][j] = IM[i][j] - crScaler * IM[fd][j]
+    return IM
+
 
 def matrix_subtraction(A, B):
     """
@@ -125,6 +137,20 @@ def matrix_multiply(A, B):
             C[i][j] = total
  
     return C    
+
+def identity_matrix(n):
+    """
+    Creates and returns an identity matrix.
+        :param n: the square size of the matrix
+ 
+        :return: a square identity matrix
+        from: https://integratedmlai.com/basic-linear-algebra-tools-in-pure-python-without-numpy-or-scipy/
+    """
+    IdM = zeros_matrix(n, n)
+    for i in range(n):
+        IdM[i][i] = 1
+ 
+    return IdM
 
 def copy_matrix(M):
     """
@@ -200,6 +226,15 @@ def get_R_Q_matrices(m, ab_states):
             R[i-q_start_row][k-r_start_col]=ms[i][k]
     
     return (Q,R)
+
+def calc_FR(Q,R):
+    I = identity_matrix(len(Q))
+    diff = matrix_subtraction(I,Q)
+
+    F = invert_matrix(diff)
+    FR = matrix_multiply(F,R)
+
+    return FR
 
 
     

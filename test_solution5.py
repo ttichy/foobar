@@ -68,3 +68,34 @@ class TestSolution5(unittest.TestCase):
         
         self.assertEqual(R[0],[0,Fraction(1,2)])
         self.assertEqual(R[1],[Fraction(4,9),0])
+
+
+    def test_invert_matrix(self):
+        m=[[1,2,3],[3,2,1],[4,2,6]]
+
+        im = solution5.invert_matrix(m)
+
+        self.assertEqual(im[0],[Fraction(-5,12), Fraction(1,4), Fraction(1,6)])
+        self.assertEqual(im[1],[Fraction(7,12), Fraction(1,4), Fraction(-1,3)])
+        self.assertEqual(im[2],[Fraction(1,12), Fraction(-1,4), Fraction(1,6)])
+    
+
+
+    def test_matr_multiply(self):
+        m1=[[0.1, 0.4]]
+        m2=[[2]]
+
+        result = solution5.matrix_multiply(m2,m1)
+        self.assertEqual(result[0],[0.2, 0.8])
+    
+    def test_calc_FR(self):
+        R=[[Fraction(1,10), Fraction(4,10)]]
+        Q= [[Fraction(1,2)]]
+
+        f= Fraction(1,2)
+        f.
+
+        result = solution5.calc_FR(Q,R)
+        self.assertEqual(result[0],[Fraction(1,5), Fraction(4,5)])
+
+    
