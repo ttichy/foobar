@@ -1,7 +1,6 @@
 from fractions import Fraction
 import fractions
-from operator import inv
-from re import T
+
 
 
 
@@ -204,7 +203,6 @@ def get_R_Q_matrices(m, ab_states):
     ab_states.sort(reverse=True)
     for i in range(len(ab_states)):
         ms[i][i]=1
-    print(i)
     ab_set = set(ab_states)
     all_set = set(range(0,len(m)))
     diff = all_set.difference(ab_set)
@@ -247,6 +245,10 @@ def lcm_multi(array):
     return res
 
 def solution(m):
+    
+    if len(m)==1:
+        return [1,1]
+    
     (m1,abs_states) = pre_process_step1(m)
 
     (Q,R,states) = get_R_Q_matrices(m1,abs_states)

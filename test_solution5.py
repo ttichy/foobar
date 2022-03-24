@@ -4,26 +4,6 @@ from fractions import Fraction
 
 class TestSolution5(unittest.TestCase):
 
-    def test_state_prob_1(self):
-        result = solution5.state_prob([0,1,0,0,0,1],1)
-        self.assertEqual(result[0],0)
-        self.assertEqual(result[1],Fraction(1,2))
-        self.assertEqual(result[2],0)
-        self.assertEqual(result[3],0)
-        self.assertEqual(result[4],0)
-        self.assertEqual(result[5],Fraction(1,2))
-
-
-
-    def test_state_prob_2(self):
-        result = solution5.state_prob([4,0,0,3,2,0],Fraction(1,2))
-        self.assertEqual(result[0],Fraction(2,9))
-        self.assertEqual(result[1],0)
-        self.assertEqual(result[2],0)
-        self.assertEqual(result[3],Fraction(3,18))
-        self.assertEqual(result[4],Fraction(1,9))
-        self.assertEqual(result[5],0)     
-
     def test_preprocess_with_case1(self):
         m=[
             [0,1,0,0,0,1],  # s0, the initial state, goes to s1 and s5 with equal probability
@@ -113,6 +93,51 @@ class TestSolution5(unittest.TestCase):
         result = solution5.solution(m)
 
         self.assertEqual(result,[7,6,8,21])
+
+    def test_case_9(self):
+        m=[[0, 86, 61, 189, 0, 18, 12, 33, 66, 39], [0, 0, 2, 0, 0, 1, 0, 0, 0, 0], [15, 187, 0, 0, 18, 23, 0, 0, 0, 0], [1, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]        
+
+        result = solution5.solution(m)
+        self.assertEqual(result,[6, 44, 4, 11, 22, 13, 100])
+
+
+    def test_case_10(self):
+        m=[[0, 0, 0, 0, 3, 5, 0, 0, 0, 2], [0, 0, 4, 0, 0, 0, 1, 0, 0, 0], [0, 0, 0, 4, 4, 0, 0, 0, 1, 1], [13, 0, 0, 0, 0, 0, 2, 0, 0, 0], [0, 1, 8, 7, 0, 0, 0, 1, 3, 0], [1, 7, 0, 0, 0, 0, 0, 2, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]] 
+
+        result = solution5.solution(m)
+        self.assertEqual(result,[1, 1, 1, 2, 5])
+
+    def test_case_8(self):
+        m=[[1, 1, 1, 0, 1, 0, 1, 0, 1, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 0, 1, 1, 1, 0, 1, 0, 1, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 0, 1, 0, 1, 1, 1, 0, 1, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 0, 1, 0, 1, 0, 1, 1, 1, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 0, 1, 0, 1, 0, 1, 0, 1, 1], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+
+        result = solution5.solution(m)
+        self.assertEqual(result,[2, 1, 1, 1, 1, 6])
+
+    def test_case_7(self):
+        m=[[1, 1, 1, 1, 1, 1, 1, 1, 1, 1], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+
+        result = solution5.solution(m)
+        self.assertEqual(result,[1, 1, 1, 1, 1, 5])
+
+    def test_case_6(self):
+        m=[[ 0,  7,  0, 17,  0,  1,  0,  5,  0,  2], [ 0,  0, 29,  0, 28,  0,  3,  0, 16,  0], [ 0,  3,  0,  0,  0,  1,  0,  0,  0,  0], [48,  0,  3,  0,  0,  0, 17,  0,  0,  0], [ 0,  6,  0,  0,  0,  1,  0,  0,  0,  0], [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0], [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0], [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0], [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0], [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0]]
+
+        result = solution5.solution(m)
+        self.assertEqual(result,[4, 5, 5, 4, 2, 20])
+    
+    def test_case_5(self):
+        m=[[0, 0, 12, 0, 15, 0, 0, 0, 1, 8], [0, 0, 60, 0, 0, 7, 13, 0, 0, 0], [0, 15, 0, 8, 7, 0, 0, 1, 9, 0], [23, 0, 0, 0, 0, 1, 0, 0, 0, 0], [37, 35, 0, 0, 0, 0, 3, 21, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+
+        result = solution5.solution(m)
+        self.assertEqual(result,[1, 2, 3, 4, 5, 15])
+
+    def test_case_4(self):
+        m=[[0]]
+
+        result = solution5.solution(m)
+        self.assertEqual(result,[1, 1])
+
+
 
     def test_lcm_multi_14_3_7_6_shouldbe_42(self):
         result =solution5.lcm_multi([14,3,7,6])
