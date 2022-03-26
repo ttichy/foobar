@@ -56,11 +56,6 @@ class TestSolution6(unittest.TestCase):
 
         self.assertEqual(result,'8')             
 
-    def test_shortcut(self):
-        (short,left) = solution6.shortcut(17,3)
-
-        self.assertEqual(short,5)
-        self.assertEqual(left,2)
 
     def test_solution_with_18_21(self):
         result = solution6.solution('18','21')
@@ -75,4 +70,7 @@ class TestSolution6(unittest.TestCase):
         result = solution6.solution('21205',str(21205+9031))
         self.assertEqual(result,'29')
 
-          
+
+    def test_solution_with_large_numbers2(self):
+        result = solution6.solution('10^15','12459852189')
+        self.assertEqual(result,'802761') # not sure about the result here          
