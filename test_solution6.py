@@ -4,17 +4,6 @@ from fractions import Fraction
 
 class TestSolution6(unittest.TestCase):
 
-    def test_pair_up_with_4_7(self):
-        (pairs, leftover,) = solution6.pair_up(4,7)
-        self.assertEqual(pairs,4)
-        self.assertEqual(leftover,3)
-
-
-    def test_pair_up_with_2_1(self):
-        (pairs, leftover,) = solution6.pair_up(2,1)
-        self.assertEqual(pairs,1)
-        self.assertEqual(leftover,1)
-
     def test_solution_with_2_4_should_be_impossible(self):
         result = solution6.solution('2','4')
 
@@ -84,5 +73,6 @@ class TestSolution6(unittest.TestCase):
 
     def test_solution_with_large_numbers(self):
         result = solution6.solution('21205',str(21205+9031))
+        self.assertEqual(result,'29')
 
           
