@@ -77,6 +77,10 @@ class TestSolution6(unittest.TestCase):
         result = solution6.solution('18','21')
         self.assertEqual(result,'impossible')
 
+    def test_solution_with_11_4_should_be_5(self):
+        result = solution6.solution('11','4')
+        self.assertEqual(result,'5')
+
 
     def test_solution_with_large_numbers(self):
         result = solution6.solution('21205',str(21205+9031))

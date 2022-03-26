@@ -10,14 +10,18 @@ def pair_up(macs, facs):
     return (pairs,abs_diff)
 
 
-def shortcut(pairs, leftovers):
-    bigger = max(pairs,leftovers)
-    smaller = min(pairs, leftovers)
-    
-    div = bigger / smaller
-    count = bigger % smaller
+def shortcut(x, y):
+    bigger = max(x,y)
+    smaller = min(x, y)
+    if smaller !=1 and bigger != 1:
+        div = bigger / smaller
+        left = bigger % smaller
+    else:
+        div=1
+        left=bigger-smaller
 
-    return(div,count)
+
+    return(div,left)
 
 
 
@@ -34,7 +38,7 @@ def prev(pairs, leftovers, count=0):
     return prev(diff,smaller,count+1)
 
 
-def solution(M,F):
+def solution_old(M,F):
     if M == F: return 'impossible'
     # type: (str,str)->str
     macs = int(float(M.replace('^','E')))
@@ -55,3 +59,23 @@ def solution(M,F):
     if result=='impossible': return 'impossible'
 
     return str(result+short)
+
+def solution (M,F):
+    # type: (str,str)->str
+    if M == F: return 'impossible'
+    macs = int(float(M.replace('^','E')))
+    facs = int(float(F.replace('^','E')))
+    x = facs
+    y = macs
+    steps = 0
+    while x * y != 1:
+        if facs==macs: return 'impossible'
+
+        (count,leftover)=shortcut(x,y)
+        if leftover==0: return 'impossible'
+        x=min(x,y)
+        y=leftover
+        steps = steps+count
+
+    return str(steps)
+
