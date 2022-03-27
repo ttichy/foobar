@@ -1,4 +1,3 @@
-from time import time
 import timeit
 
 
@@ -33,28 +32,6 @@ def reduce(x,y,count=0):
         return reduce(left,y,count)
     return reduce(y,left,count)
 
-
-    # if x>y:
-    #     div=x // y
-    #     left = x % y
-    #     return reduce(y,left,count+div)
-    # else:
-    #     div = y // x
-    #     left = y % x
-    #     return reduce(x,left,count+div)
-
-    # bigger = max(x,y)
-    # smaller = min(x, y)
-    # if smaller !=1 and bigger != 1:
-    #     div = bigger // smaller
-    #     left = bigger % smaller
-    # else:
-    #     # shortcut cases like 998:1, otherwise stack gets busted
-    #     # div=bigger-1
-    #     # left=1
-    #     return (str(count+bigger-1))
-    count +=div
-    return reduce(smaller,left,count)
 
 
 def solution(M,F):
